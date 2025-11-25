@@ -1,13 +1,6 @@
-import React, { useState } from 'react';
-
-interface Product {
-    id: number;
-    name: string;
-    price: number;
-    category: string;
-    image: string;
-    description: string;
-}
+import React, { useEffect, useState } from 'react';
+import { GetAllProducts } from '../services/ProductService';
+import type { Product } from '../models/Product';
 
 type ViewMode = 'cards' | 'table';
 
@@ -18,11 +11,24 @@ const ProductsPage: React.FC = () => {
     const [priceRange, setPriceRange] = useState({ min: '', max: '' });
 
     // Sample data - replace with actual data fetching
-    const productsList: Product[] = [
-        { id: 1, name: 'עוגת שוקולד', price: 120, category: 'עוגות', image: '/images/cake1.jpg', description: 'עוגת שוקולד עשירה' },
-        { id: 2, name: 'קרואסון', price: 15, category: 'מאפים', image: '/images/croissant.jpg', description: 'קרואסון חמאה טרי' },
-        { id: 3, name: 'מקרון', price: 8, category: 'עוגיות', image: '/images/macaron.jpg', description: 'מקרון צרפתי מקורי' },
-    ];
+    const [productsList, setProductsList] = useState<Product[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                setLoading(true);
+                const products = await GetAllProducts();
+                setProductsList(products);
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProducts();
+    }, []);
 
     const filteredProducts = productsList.filter(product => {
         const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -102,7 +108,7 @@ const ProductsPage: React.FC = () => {
                     {filteredProducts.map(product => (
                         <div key={product.id} className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow">
                             <img 
-                                src={product.image} 
+                                src={product.image || '/assets/empty-product.png'} 
                                 alt={product.name}
                                 className="w-full h-48 object-cover rounded mb-4"
                             />
@@ -131,7 +137,7 @@ const ProductsPage: React.FC = () => {
                                 <tr key={product.id} className="hover:bg-gray-50">
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         <div className="flex items-center">
-                                            <img src={product.image} alt={product.name} className="w-10 h-10 rounded ml-4" />
+                                            <img src={product.image || '/assets/empty-product.png'} alt={product.name} className="w-10 h-10 rounded ml-4" />
                                             <span className="font-medium">{product.name}</span>
                                         </div>
                                     </td>

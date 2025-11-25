@@ -1,7 +1,10 @@
 using BeitPatissierServer.Data;
+using BeitPatissierServer.Mappers;
 using BeitPatissierServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
 //using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -81,10 +84,15 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
+
 var app = builder.Build();
 
 // Middleware
 app.UseRouting();
+
+// AutoMapper
+
 app.UseCors("GlobalCors");
 
 if (app.Environment.IsDevelopment())

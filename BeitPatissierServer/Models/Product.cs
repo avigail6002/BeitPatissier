@@ -12,7 +12,6 @@ namespace BeitPatissierServer.Models
         public Recipe Recipe { get; set; }
         public decimal Price { get; set; } // מחיר המוצר
         public ICollection<Image> Images { get; set; } // כתובת התמונה של המוצר
-        public ICollection<ProductTag> Tags { get; set; } //רשימת ארועים מתאימים
-        public ICollection<Allergen> Allergens { get; set; }
+        public ICollection<ProductTag> ProductTags { get; set; } //רשימת ארועים מתאימים
     }
 }
