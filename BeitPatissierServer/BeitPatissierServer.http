@@ -1,0 +1,6 @@
+@BeitPatissierServer_HostAddress = http://localhost:5213
+
+GET {{BeitPatissierServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
