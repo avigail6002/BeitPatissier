@@ -2,9 +2,12 @@ using BeitPatissierServer.Data;
 using BeitPatissierServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+//using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -20,17 +23,70 @@ builder.Services.AddIdentity<BPUser, BPRole>()
     .AddEntityFrameworkStores<BeitPatissierContext>()
     .AddDefaultTokenProviders();
 
+// Password policy (אפשר לשנות לפי הצורך)
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
+});
 
-// Add services to the container.
+//// JWT (אם תרצי להשתמש)
+//var jwtKey = builder.Configuration["Jwt:Key"];
+//var jwtIssuer = builder.Configuration["Jwt:Issuer"];
+//var jwtAudience = builder.Configuration["Jwt:Audience"];
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//})
+//.AddJwtBearer(options =>
+//{
+//    options.TokenValidationParameters = new TokenValidationParameters
+//    {
+//        ValidateIssuer = true,
+//        ValidateAudience = true,
+//        ValidateLifetime = true,
+//        ValidateIssuerSigningKey = true,
+//        ValidIssuer = jwtIssuer,
+//        ValidAudience = jwtAudience,
+//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+//    };
+//});
+
+// CORS דינמי לכל המקורות כולל credentials
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("GlobalCors", policy =>
+    {
+        policy
+            .SetIsOriginAllowed(origin => true) // מאפשר כל מקור
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials(); // מאפשר credentials כמו קוקיז/Authorization headers
+    });
+});
+
+// Controllers + JSON
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
+
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Middleware
+app.UseRouting();
+app.UseCors("GlobalCors");
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -39,6 +95,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

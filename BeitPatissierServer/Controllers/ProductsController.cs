@@ -54,9 +54,10 @@ namespace BeitPatissierServer.Controllers
         //    //    return StatusCode(500, $"Failed to save user exercise: {ex.Message}");
         //    //}
         //}
-        public IActionResult GetAllProducts()
-        {
-            return View();
-        }
+        //[HttpGet]
+        //public IActionResult GetAllProducts()
+        //{
+        //    return View();
+        //}
     }
 }
