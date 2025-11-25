@@ -12,9 +12,9 @@ namespace BeitPatissierServer.Controllers
 
         private readonly UserManager<BPUser> _userManager;
 
-        public ProductsController()
+        public ProductsController(UserManager<BPUser> userManager)
         {
-            
+            _userManager = userManager;
         }
         //[HttpPost]
         //public async Task<IActionResult> AddUserExercise([FromBody] ProductDTO dto)
