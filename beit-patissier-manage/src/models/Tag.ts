@@ -1,4 +1,5 @@
-import { ProductTag } from './ProductTag';
+import { ProductTag } from "./ProductTag";
+
 
 export enum TagTypeEnum {
     Season = 'Season',     
@@ -30,3 +31,12 @@ export class Tag {
         this.productTags = productTags;
     }
 }
+
+export const TagTypeEnumHebrew: Record<TagTypeEnum, string> = {
+    [TagTypeEnum.Season]: 'עונה',
+    [TagTypeEnum.EventType]: 'סוג אירוע',
+    [TagTypeEnum.Style]: 'סגנון',
+    [TagTypeEnum.Taste]: 'טעם',
+    [TagTypeEnum.Kashrut]: 'כשרות',
+    [TagTypeEnum.Audience]: 'קהל יעד'
+};
