@@ -2,10 +2,13 @@ import './App.css'
 import Sidebar from './components/Sidebar'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import ProductsPage from './pages/Products'
+import AddProduct from './pages/AddProduct'
 
 function App() {
+ 
   return (
-    <>
+    <> 
+  
       <BrowserRouter>
             <div className="h-screen w-screen flex flex-row-reverse">
               <Sidebar />
@@ -22,8 +25,11 @@ function App() {
                     {/* </Route> */}
                 </Routes>
               </main>
+             
             </div>
+               <AddProduct />
       </BrowserRouter>
+      
     </>
   )
 }
