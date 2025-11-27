@@ -1,4 +1,5 @@
-﻿using BeitPatissierServer.Models;
+﻿using BeitPatissierServer.DTOs;
+using BeitPatissierServer.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +25,7 @@ namespace BeitPatissierServer.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequest model)
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
