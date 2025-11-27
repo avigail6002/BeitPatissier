@@ -7,7 +7,6 @@ namespace BeitPatissierServer.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string ProfileHexColor { get; set; } //צבע הפרופיל מוגרל פעם אחת ביצירת משתמש חדש
         public DateTime JoinDate { get; set; }
         public ICollection<Order> UserOrders { get; set; }
 

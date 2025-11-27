@@ -1,10 +1,9 @@
-using BeitPatissierServer.Data;
+ο»Ώusing BeitPatissierServer.Data;
 using BeitPatissierServer.Mappers;
 using BeitPatissierServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -22,11 +21,18 @@ builder.Services.AddDbContext<BeitPatissierContext>(options =>
     ));
 
 // Identity
-builder.Services.AddIdentity<BPUser, BPRole>()
-    .AddEntityFrameworkStores<BeitPatissierContext>()
-    .AddDefaultTokenProviders();
+builder.Services.AddIdentity<BPUser, IdentityRole<int>>(options =>
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireLowercase = false;
+})
+.AddEntityFrameworkStores<BeitPatissierContext>()
+.AddDefaultTokenProviders();
 
-// Password policy (ΰτωψ μωπεϊ μτι δφεψκ)
+// Password policy (ΧΧ¤Χ©Χ¨ ΧΧ©Χ Χ•Χª ΧΧ¤Χ™ Χ”Χ¦Χ•Χ¨Χ)
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = true;
@@ -36,7 +42,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireNonAlphanumeric = false;
 });
 
-//// JWT (ΰν ϊψφι μδωϊξω)
+// JWT
 var jwtKey = builder.Configuration["Jwt:Key"];
 var jwtIssuer = builder.Configuration["Jwt:Issuer"];
 var jwtAudience = builder.Configuration["Jwt:Audience"];
@@ -50,8 +56,13 @@ builder.Services.AddAuthentication(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
+        #if DEBUG
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        #else
         ValidateIssuer = true,
         ValidateAudience = true,
+        #endif
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         ValidIssuer = jwtIssuer,
@@ -60,16 +71,16 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// CORS γιπξι μλμ δξχεψεϊ λεμμ credentials
+// CORS Χ“Χ™Χ ΧΧ™ ΧΧ›Χ Χ”ΧΧ§Χ•Χ¨Χ•Χª Χ›Χ•ΧΧ credentials
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("GlobalCors", policy =>
     {
         policy
-            .SetIsOriginAllowed(origin => true) // ξΰτωψ λμ ξχεψ
+            .SetIsOriginAllowed(origin => true) // ΧΧΧ¤Χ©Χ¨ Χ›Χ ΧΧ§Χ•Χ¨
             .AllowAnyHeader()
             .AllowAnyMethod()
-            .AllowCredentials(); // ξΰτωψ credentials λξε χεχιζ/Authorization headers
+            .AllowCredentials(); // ΧΧΧ¤Χ©Χ¨ credentials Χ›ΧΧ• Χ§Χ•Χ§Χ™Χ–/Authorization headers
     });
 });
 
@@ -87,6 +98,22 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
 var app = builder.Build();
+
+// ΧΧ”Χ¨Χ™Χ¥ ΧΧª Χ”Χ¤Χ•Χ Χ§Χ¦Χ™Χ” ΧΧΧ—Χ¨ Χ‘Χ Χ™Χ™Χª Χ”ΧΧ¤ΧΧ™Χ§Χ¦Χ™Χ”
+using var scope = app.Services.CreateScope();
+var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
+
+string[] roles = { "Admin", "Employee", "Customer" };
+
+foreach (var roleName in roles)
+{
+    if (!await roleManager.RoleExistsAsync(roleName))
+    {
+        await roleManager.CreateAsync(new IdentityRole<int> { Name = roleName, NormalizedName = roleName.ToUpper() });
+    }
+}
+await CreateAdminUserAsync(app);
+
 
 // Middleware
 app.UseRouting();
@@ -109,3 +136,34 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+async Task CreateAdminUserAsync(WebApplication app)
+{
+    using var scope = app.Services.CreateScope();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<BPUser>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
+
+    // Χ•Χ“Χ Χ©Χ”Χ¨Χ•Χ Χ§Χ™Χ™Χ
+    if (!await roleManager.RoleExistsAsync("Admin"))
+    {
+        await roleManager.CreateAsync(new IdentityRole<int>("Admin"));
+    }
+
+    // Χ™Χ¦Χ™Χ¨Χª ΧΧ©ΧªΧΧ© ΧΧ Χ”Χ
+    var adminEmail = "admin@gmail.com";
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+    if (adminUser == null)
+    {
+        adminUser = new BPUser
+        {
+            UserName = "admin",
+            Email = adminEmail,
+            EmailConfirmed = true,
+            FirstName = "System",
+            LastName = "Admin"
+        };
+
+        await userManager.CreateAsync(adminUser, "Admin123!");
+        await userManager.AddToRoleAsync(adminUser, "Admin");
+    }
+}

@@ -7,10 +7,10 @@ interface GoogleLoginResponse {
     token: string;
 }
 
-const API_BASE_ROUTE = '/Auth'; 
+const API_BASE_ROUTE = '/Login'; 
 export const googleLogin = async (idToken: string): Promise<string> => {
     try {
-        const response = await apiClient.post<GoogleLoginResponse>(`${API_BASE_ROUTE}/google-login`, {
+        const response = await apiClient.post<GoogleLoginResponse>(`${API_BASE_ROUTE}/GoogleLogin`, {
             idToken: idToken 
         });
         const token = response.data.token;

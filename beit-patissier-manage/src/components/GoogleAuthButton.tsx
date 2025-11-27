@@ -9,8 +9,7 @@ interface GoogleAuthButtonProps {
     onError: (message: string) => void;
 }
 
-const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ onSuccess, onError }) => {
-
+export const GoogleAuthButton = ({ onSuccess, onError }: GoogleAuthButtonProps) => {
     const handleSuccess = async (credentialResponse: CredentialResponse) => {
         const idToken = credentialResponse.credential;
         if (idToken) {
@@ -39,4 +38,3 @@ const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ onSuccess, onError 
     );
 };
 
-export default GoogleAuthButton;

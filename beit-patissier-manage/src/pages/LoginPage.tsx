@@ -1,6 +1,6 @@
 // pages/LoginPage.tsx
 import React, { useState } from 'react';
-import GoogleAuthButton from '../components/GoogleAuthButton';
+import {GoogleAuthButton} from '../components/GoogleAuthButton';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
