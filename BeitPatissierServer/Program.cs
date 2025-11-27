@@ -1,6 +1,7 @@
 using BeitPatissierServer.Data;
 using BeitPatissierServer.Mappers;
 using BeitPatissierServer.Models;
+using BeitPatissierServer.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -85,6 +86,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
+builder.Services.AddScoped<ProductService>();
 
 var app = builder.Build();
 
