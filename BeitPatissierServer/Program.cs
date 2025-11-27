@@ -49,8 +49,13 @@ builder.Services.AddAuthentication(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
+        #if DEBUG
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        #else
         ValidateIssuer = true,
         ValidateAudience = true,
+        #endif
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         ValidIssuer = jwtIssuer,
