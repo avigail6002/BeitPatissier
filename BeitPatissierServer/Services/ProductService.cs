@@ -2,6 +2,7 @@
 using BeitPatissierServer.Data;
 using BeitPatissierServer.DTOs;
 using BeitPatissierServer.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BeitPatissierServer.Services
 {
@@ -35,7 +36,15 @@ namespace BeitPatissierServer.Services
             var product = _mapper.Map<Product>(productDTO);
 
             _context.Products.Add(product);
-            _context.SaveChanges();
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine(ex.InnerException?.Message);
+                throw;
+            }
 
             return _mapper.Map<ProductDTO>(product);
         }
