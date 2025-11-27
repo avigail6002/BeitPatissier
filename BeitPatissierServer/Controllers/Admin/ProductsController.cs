@@ -6,7 +6,7 @@ using BeitPatissierServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BeitPatissierServer.Controllers
+namespace BeitPatissierServer.Controllers.Admin
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
