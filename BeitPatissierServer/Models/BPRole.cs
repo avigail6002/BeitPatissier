@@ -4,5 +4,6 @@ namespace BeitPatissierServer.Models
 {
     public class BPRole : IdentityRole<int>
     {
+
     }
 }

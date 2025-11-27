@@ -1,11 +1,10 @@
-using BeitPatissierServer.Data;
+ο»Ώusing BeitPatissierServer.Data;
 using BeitPatissierServer.Mappers;
 using BeitPatissierServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-
-//using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -26,7 +25,7 @@ builder.Services.AddIdentity<BPUser, BPRole>()
     .AddEntityFrameworkStores<BeitPatissierContext>()
     .AddDefaultTokenProviders();
 
-// Password policy (ΰτωψ μωπεϊ μτι δφεψκ)
+// Password policy (ΧΧ¤Χ©Χ¨ ΧΧ©Χ Χ•Χª ΧΧ¤Χ™ Χ”Χ¦Χ•Χ¨Χ)
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = true;
@@ -36,40 +35,40 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireNonAlphanumeric = false;
 });
 
-//// JWT (ΰν ϊψφι μδωϊξω)
-//var jwtKey = builder.Configuration["Jwt:Key"];
-//var jwtIssuer = builder.Configuration["Jwt:Issuer"];
-//var jwtAudience = builder.Configuration["Jwt:Audience"];
+// JWT
+var jwtKey = builder.Configuration["Jwt:Key"];
+var jwtIssuer = builder.Configuration["Jwt:Issuer"];
+var jwtAudience = builder.Configuration["Jwt:Audience"];
 
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//})
-//.AddJwtBearer(options =>
-//{
-//    options.TokenValidationParameters = new TokenValidationParameters
-//    {
-//        ValidateIssuer = true,
-//        ValidateAudience = true,
-//        ValidateLifetime = true,
-//        ValidateIssuerSigningKey = true,
-//        ValidIssuer = jwtIssuer,
-//        ValidAudience = jwtAudience,
-//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
-//    };
-//});
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtIssuer,
+        ValidAudience = jwtAudience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+    };
+});
 
-// CORS γιπξι μλμ δξχεψεϊ λεμμ credentials
+// CORS Χ“Χ™Χ ΧΧ™ ΧΧ›Χ Χ”ΧΧ§Χ•Χ¨Χ•Χª Χ›Χ•ΧΧ credentials
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("GlobalCors", policy =>
     {
         policy
-            .SetIsOriginAllowed(origin => true) // ξΰτωψ λμ ξχεψ
+            .SetIsOriginAllowed(origin => true) // ΧΧΧ¤Χ©Χ¨ Χ›Χ ΧΧ§Χ•Χ¨
             .AllowAnyHeader()
             .AllowAnyMethod()
-            .AllowCredentials(); // ξΰτωψ credentials λξε χεχιζ/Authorization headers
+            .AllowCredentials(); // ΧΧΧ¤Χ©Χ¨ credentials Χ›ΧΧ• Χ§Χ•Χ§Χ™Χ–/Authorization headers
     });
 });
 
