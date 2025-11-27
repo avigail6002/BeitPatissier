@@ -8,7 +8,7 @@ type ViewMode = 'cards' | 'table';
 const ProductsPage: React.FC = () => {
     const [viewMode, setViewMode] = useState<ViewMode>('cards');
     const [searchTerm, setSearchTerm] = useState('');
-    const [categoryFilter, setCategoryFilter] = useState('');
+    // const [categoryFilter, setCategoryFilter] = useState('');
     const [priceRange, setPriceRange] = useState({ min: '', max: '' });
 
     // Sample data - replace with actual data fetching
@@ -32,14 +32,14 @@ const ProductsPage: React.FC = () => {
 
     const filteredProducts = productsList.filter(product => {
         const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCategory = !categoryFilter || product.category === categoryFilter;
+        // const matchesCategory = !categoryFilter || product.category === categoryFilter;
         const matchesPriceMin = !priceRange.min || product.price >= Number(priceRange.min);
         const matchesPriceMax = !priceRange.max || product.price <= Number(priceRange.max);
 
-        return matchesSearch && matchesCategory && matchesPriceMin && matchesPriceMax;
+        return matchesSearch && matchesPriceMin && matchesPriceMax; // ..matchesCategory
     });
 
-    const categories = [...new Set(productsList.map(p => p.category))];
+    // const categories = [...new Set(productsList.map(p => p.category))];
 
     return (
         <div className="p-6">
@@ -72,7 +72,7 @@ const ProductsPage: React.FC = () => {
                             className="px-3 py-2 border rounded"
                         />
 
-                        <select
+                        {/* <select
                             value={categoryFilter}
                             onChange={(e) => setCategoryFilter(e.target.value)}
                             className="px-3 py-2 border rounded"
@@ -81,7 +81,7 @@ const ProductsPage: React.FC = () => {
                             {categories.map(category => (
                                 <option key={category} value={category}>{category}</option>
                             ))}
-                        </select>
+                        </select> */}
 
                         <input
                             type="number"
@@ -106,17 +106,17 @@ const ProductsPage: React.FC = () => {
             {viewMode === 'cards' ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     {filteredProducts.map(product => (
-                        <div key={product.id} className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow">
-                            <img
+                        <div key={product.productId} className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow">
+                            {/* <img
                                 src={product.image || '/assets/empty-product.png'}
                                 alt={product.name}
                                 className="w-full h-48 object-cover rounded mb-4"
-                            />
+                            /> */}
                             <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
                             <p className="text-gray-600 mb-2">{product.description}</p>
                             <div className="flex justify-between items-center">
                                 <span className="text-lg font-bold text-green-600">₪{product.price}</span>
-                                <span className="text-sm bg-gray-100 px-2 py-1 rounded">{product.category}</span>
+                                {/* <span className="text-sm bg-gray-100 px-2 py-1 rounded">{product.category}</span> */}
                             </div>
                         </div>
                     ))}
