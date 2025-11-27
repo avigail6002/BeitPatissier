@@ -4,6 +4,7 @@ using BeitPatissierServer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeitPatissierServer.Migrations
 {
     [DbContext(typeof(BeitPatissierContext))]
-    partial class BeitPatissierContextModelSnapshot : ModelSnapshot
+    [Migration("20251127112925_add_Contact_table")]
+    partial class add_Contact_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,6 +62,36 @@ namespace BeitPatissierServer.Migrations
                             AllergenId = 4,
                             Name = "חלב"
                         });
+                });
+
+            modelBuilder.Entity("BeitPatissierServer.Models.BPRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("BeitPatissierServer.Models.BPUser", b =>
@@ -126,6 +159,10 @@ namespace BeitPatissierServer.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("ProfileHexColor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -147,98 +184,6 @@ namespace BeitPatissierServer.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 2,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "551e4f2e-7e56-45a1-b479-5994da3bbdb5",
-                            Email = "manager1@example.com",
-                            EmailConfirmed = true,
-                            FirstName = "Mali",
-                            JoinDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastName = "Levi",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "MANAGER1@EXAMPLE.COM",
-                            NormalizedUserName = "MANAGER1",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGz1FJf0qV3hGm8R9TtNwftF6u4aG+Yq5rC9GxJzFm0rD2nW6D4bU6YpT2yK1J/MBw==",
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "manager1"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "5ede468d-cc94-4647-8969-e69e25a46a2e",
-                            Email = "manager2@example.com",
-                            EmailConfirmed = true,
-                            FirstName = "Sara",
-                            JoinDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastName = "Cohen",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "MANAGER2@EXAMPLE.COM",
-                            NormalizedUserName = "MANAGER2",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGz1FJf0qV3hGm8R9TtNwftF6u4aG+Yq5rC9GxJzFm0rD2nW6D4bU6YpT2yK1J/MBw==",
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "manager2"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "81c225e9-c5da-45c5-92ad-e3ef9c1ecdb4",
-                            Email = "customer1@example.com",
-                            EmailConfirmed = true,
-                            FirstName = "Avi",
-                            JoinDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastName = "Halevi",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "CUSTOMER1@EXAMPLE.COM",
-                            NormalizedUserName = "CUSTOMER1",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGz1FJf0qV3hGm8R9TtNwftF6u4aG+Yq5rC9GxJzFm0rD2nW6D4bU6YpT2yK1J/MBw==",
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "customer1"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "f39961c7-bdf5-4df2-8964-d2a3684e916c",
-                            Email = "customer2@example.com",
-                            EmailConfirmed = true,
-                            FirstName = "Rachel",
-                            JoinDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastName = "Bar",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "CUSTOMER2@EXAMPLE.COM",
-                            NormalizedUserName = "CUSTOMER2",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGz1FJf0qV3hGm8R9TtNwftF6u4aG+Yq5rC9GxJzFm0rD2nW6D4bU6YpT2yK1J/MBw==",
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "customer2"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "ae0199f4-9e19-4aae-9c25-fc5053f7e141",
-                            Email = "customer3@example.com",
-                            EmailConfirmed = true,
-                            FirstName = "David",
-                            JoinDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastName = "Tal",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "CUSTOMER3@EXAMPLE.COM",
-                            NormalizedUserName = "CUSTOMER3",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGz1FJf0qV3hGm8R9TtNwftF6u4aG+Yq5rC9GxJzFm0rD2nW6D4bU6YpT2yK1J/MBw==",
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "customer3"
-                        });
                 });
 
             modelBuilder.Entity("BeitPatissierServer.Models.Contact", b =>
@@ -280,91 +225,6 @@ namespace BeitPatissierServer.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Contacts");
-
-                    b.HasData(
-                        new
-                        {
-                            ContactId = 1,
-                            Email = "avi@example.com",
-                            Message = "לא מצליח להתחבר למערכת",
-                            Phone = "0501234567",
-                            Status = 0,
-                            Subject = "בעיה בהתחברות",
-                            UserId = 6,
-                            UserName = "Avi User"
-                        },
-                        new
-                        {
-                            ContactId = 2,
-                            Email = "avi@example.com",
-                            Message = "הזמנה לא נסגרת",
-                            Phone = "0501234567",
-                            Status = 0,
-                            Subject = "באג בהזמנה",
-                            UserId = 6,
-                            UserName = "Avi User"
-                        },
-                        new
-                        {
-                            ContactId = 3,
-                            Email = "avi@example.com",
-                            Message = "מבקש לעדכן טלפון",
-                            Phone = "0501234567",
-                            Status = 0,
-                            Subject = "עדכון פרטים",
-                            UserId = 4,
-                            UserName = "Avi User"
-                        },
-                        new
-                        {
-                            ContactId = 4,
-                            Email = "mali@example.com",
-                            Message = "מתי מגיע?",
-                            Phone = "0529988776",
-                            Status = 0,
-                            Subject = "שאלה על משלוח",
-                            UserName = "Mali"
-                        },
-                        new
-                        {
-                            ContactId = 5,
-                            Email = "sara@example.com",
-                            Message = "הפרטים שלי לא מעודכנים",
-                            Phone = "0534455667",
-                            Status = 0,
-                            Subject = "בקשה לתיקון",
-                            UserName = "Sara"
-                        },
-                        new
-                        {
-                            ContactId = 6,
-                            Email = "dan@example.com",
-                            Message = "טופל",
-                            Phone = "0547891122",
-                            Status = 1,
-                            Subject = "סגור 1",
-                            UserName = "Dan"
-                        },
-                        new
-                        {
-                            ContactId = 7,
-                            Email = "hadas@example.com",
-                            Message = "נפתר",
-                            Phone = "0585566778",
-                            Status = 1,
-                            Subject = "סגור 2",
-                            UserName = "Hadas"
-                        },
-                        new
-                        {
-                            ContactId = 8,
-                            Email = "roni@example.com",
-                            Message = "הסתדר",
-                            Phone = "0573322110",
-                            Status = 1,
-                            Subject = "סגור 3",
-                            UserName = "Roni"
-                        });
                 });
 
             modelBuilder.Entity("BeitPatissierServer.Models.Event", b =>
@@ -854,36 +714,6 @@ namespace BeitPatissierServer.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
@@ -966,33 +796,6 @@ namespace BeitPatissierServer.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = 2,
-                            RoleId = 2
-                        },
-                        new
-                        {
-                            UserId = 3,
-                            RoleId = 2
-                        },
-                        new
-                        {
-                            UserId = 4,
-                            RoleId = 3
-                        },
-                        new
-                        {
-                            UserId = 5,
-                            RoleId = 3
-                        },
-                        new
-                        {
-                            UserId = 6,
-                            RoleId = 3
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
@@ -1137,7 +940,7 @@ namespace BeitPatissierServer.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
+                    b.HasOne("BeitPatissierServer.Models.BPRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1164,7 +967,7 @@ namespace BeitPatissierServer.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
+                    b.HasOne("BeitPatissierServer.Models.BPRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)

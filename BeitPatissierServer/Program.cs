@@ -21,9 +21,16 @@ builder.Services.AddDbContext<BeitPatissierContext>(options =>
     ));
 
 // Identity
-builder.Services.AddIdentity<BPUser, BPRole>()
-    .AddEntityFrameworkStores<BeitPatissierContext>()
-    .AddDefaultTokenProviders();
+builder.Services.AddIdentity<BPUser, IdentityRole<int>>(options =>
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireLowercase = false;
+})
+.AddEntityFrameworkStores<BeitPatissierContext>()
+.AddDefaultTokenProviders();
 
 // Password policy (אפשר לשנות לפי הצורך)
 builder.Services.Configure<IdentityOptions>(options =>
@@ -92,6 +99,22 @@ builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
 var app = builder.Build();
 
+// להריץ את הפונקציה לאחר בניית האפליקציה
+using var scope = app.Services.CreateScope();
+var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
+
+string[] roles = { "Admin", "Employee", "Customer" };
+
+foreach (var roleName in roles)
+{
+    if (!await roleManager.RoleExistsAsync(roleName))
+    {
+        await roleManager.CreateAsync(new IdentityRole<int> { Name = roleName, NormalizedName = roleName.ToUpper() });
+    }
+}
+await CreateAdminUserAsync(app);
+
+
 // Middleware
 app.UseRouting();
 
@@ -113,3 +136,34 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+async Task CreateAdminUserAsync(WebApplication app)
+{
+    using var scope = app.Services.CreateScope();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<BPUser>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
+
+    // ודא שהרול קיים
+    if (!await roleManager.RoleExistsAsync("Admin"))
+    {
+        await roleManager.CreateAsync(new IdentityRole<int>("Admin"));
+    }
+
+    // יצירת משתמש מנהל
+    var adminEmail = "admin@gmail.com";
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+    if (adminUser == null)
+    {
+        adminUser = new BPUser
+        {
+            UserName = "admin",
+            Email = adminEmail,
+            EmailConfirmed = true,
+            FirstName = "System",
+            LastName = "Admin"
+        };
+
+        await userManager.CreateAsync(adminUser, "Admin123!");
+        await userManager.AddToRoleAsync(adminUser, "Admin");
+    }
+}
