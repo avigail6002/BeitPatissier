@@ -2,27 +2,31 @@ import './App.css'
 import Sidebar from './components/Sidebar'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import ProductsPage from './pages/Products'
+import Login from './pages/login'
 
 function App() {
   return (
     <>
       <BrowserRouter>
-            <div className="h-screen w-screen flex flex-row-reverse">
-              <Sidebar />
-              <main className="flex-1 p-4 pr-40">
-                <Routes>
-                  {/* <Route path="/" element={<h1 className="text-2xl font-bold">ברוכים הבאים למערכת TechUp</h1>} />
+        <div className="h-screen w-screen flex flex-row-reverse">
+          <Sidebar />
+          <main className="flex-1 p-4 pr-40">
+            <Routes>
+              {/* <Route path="/" element={<h1 className="text-2xl font-bold">ברוכים הבאים למערכת TechUp</h1>} />
                   
                   */}
+              {/* דף לוגין – לבד, בלי Sidebar */}
+              <Route path="/login" element={<Login />} />
 
+              {/* <Route element={<ProtectedRoute />}> */}
+              {/* אבטחת ניתוב למנהל בלבד */}
+              <Route path="/מוצרים" element={<ProductsPage />} />
+              {/* </Route> */}
+            </Routes>
+            {/* <Login /> */}
 
-                  {/* <Route element={<ProtectedRoute />}> */}
-                  {/* אבטחת ניתוב למנהל בלבד */}
-                    <Route path="/מוצרים" element={<ProductsPage />} />
-                    {/* </Route> */}
-                </Routes>
-              </main>
-            </div>
+          </main>
+        </div>
       </BrowserRouter>
     </>
   )
