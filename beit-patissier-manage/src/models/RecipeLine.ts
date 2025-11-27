@@ -42,3 +42,13 @@ export class RecipeLine {
     }
 }
 
+export const UnitEnumHebrew: Record<UnitEnum, string> = {
+    [UnitEnum.Kilo]: 'קילו',
+    [UnitEnum.Gram]: 'גרם',
+    [UnitEnum.Liter]: 'ליטר',
+    [UnitEnum.Milliliter]: 'מיליליטר',
+    [UnitEnum.Tablespoon]: 'כף',
+    [UnitEnum.Teaspoon]: 'כפית',
+    [UnitEnum.Pinch]: 'קמצוץ',
+    [UnitEnum.Unit]: 'יחידה'
+};
