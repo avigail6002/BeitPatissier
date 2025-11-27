@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using BeitPatissierServer.Services;
 
-namespace BeitPatissierServer.Controllers
+namespace BeitPatissierServer.Controllers.Admin
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
@@ -38,6 +38,7 @@ namespace BeitPatissierServer.Controllers
             var products = _productService.GetAllProducts();
             return Ok(products);
         }
+
         [HttpPost]
         public ActionResult<ProductDTO> AddProduct([FromBody] ProductDTO productDTO)
         {
@@ -45,10 +46,7 @@ namespace BeitPatissierServer.Controllers
             return CreatedAtAction(nameof(GetProductById), new { id = createdProduct.ProductId }, createdProduct);
         }
 
-
-
-
-
+            
 
 
     }
