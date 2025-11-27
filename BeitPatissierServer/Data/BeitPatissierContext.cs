@@ -1,6 +1,7 @@
 ﻿using BeitPatissierServer.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace BeitPatissierServer.Data
 {
@@ -28,6 +29,11 @@ namespace BeitPatissierServer.Data
             builder.Entity<ProductTag>()
                 .HasKey(pt => new { pt.ProductId, pt.TagId });
 
+            builder.Entity<RecipeAllergen>()
+                .HasKey(pt => new { pt.RecipeId, pt.AllergenId });
+
+            base.OnModelCreating(builder);
+
             // --- Precision גלובלי ל-decimal ---
             foreach (var property in builder.Model.GetEntityTypes()
                 .SelectMany(t => t.GetProperties())
@@ -36,6 +42,7 @@ namespace BeitPatissierServer.Data
                 property.SetPrecision(18);
                 property.SetScale(2);
             }
+            ModelBuilderExtensions.SeedData(builder);
         }
     }
 }

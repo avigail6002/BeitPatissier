@@ -4,6 +4,7 @@ using BeitPatissierServer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeitPatissierServer.Migrations
 {
     [DbContext(typeof(BeitPatissierContext))]
-    partial class BeitPatissierContextModelSnapshot : ModelSnapshot
+    [Migration("20251125165400_add_data_to_start")]
+    partial class add_data_to_start
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,28 +40,6 @@ namespace BeitPatissierServer.Migrations
                     b.HasKey("AllergenId");
 
                     b.ToTable("Allergens");
-
-                    b.HasData(
-                        new
-                        {
-                            AllergenId = 1,
-                            Name = "גלוטן"
-                        },
-                        new
-                        {
-                            AllergenId = 2,
-                            Name = "אגוזים"
-                        },
-                        new
-                        {
-                            AllergenId = 3,
-                            Name = "ביצים"
-                        },
-                        new
-                        {
-                            AllergenId = 4,
-                            Name = "חלב"
-                        });
                 });
 
             modelBuilder.Entity("BeitPatissierServer.Models.BPRole", b =>
@@ -241,44 +222,6 @@ namespace BeitPatissierServer.Migrations
                     b.HasKey("IngredientId");
 
                     b.ToTable("Ingredients");
-
-                    b.HasData(
-                        new
-                        {
-                            IngredientId = 1,
-                            Name = "אבקת שקדים",
-                            PricePerUnit = 0m
-                        },
-                        new
-                        {
-                            IngredientId = 2,
-                            Name = "סוכר",
-                            PricePerUnit = 0m
-                        },
-                        new
-                        {
-                            IngredientId = 3,
-                            Name = "חלבון ביצה",
-                            PricePerUnit = 0m
-                        },
-                        new
-                        {
-                            IngredientId = 4,
-                            Name = "חמאה",
-                            PricePerUnit = 0m
-                        },
-                        new
-                        {
-                            IngredientId = 5,
-                            Name = "קמח",
-                            PricePerUnit = 0m
-                        },
-                        new
-                        {
-                            IngredientId = 6,
-                            Name = "שמרים",
-                            PricePerUnit = 0m
-                        });
                 });
 
             modelBuilder.Entity("BeitPatissierServer.Models.Order", b =>
@@ -380,24 +323,6 @@ namespace BeitPatissierServer.Migrations
                     b.HasIndex("RecipeId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductId = 1,
-                            Description = "מקרון עדין משקדים במגוון טעמים.",
-                            Name = "מקרון",
-                            Price = 120m,
-                            RecipeId = 1
-                        },
-                        new
-                        {
-                            ProductId = 2,
-                            Description = "קראוסון חמאה קלאסי וטרי.",
-                            Name = "קראוסון",
-                            Price = 40m,
-                            RecipeId = 2
-                        });
                 });
 
             modelBuilder.Entity("BeitPatissierServer.Models.ProductTag", b =>
@@ -413,18 +338,6 @@ namespace BeitPatissierServer.Migrations
                     b.HasIndex("TagId");
 
                     b.ToTable("ProductTags");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductId = 1,
-                            TagId = 1
-                        },
-                        new
-                        {
-                            ProductId = 2,
-                            TagId = 2
-                        });
                 });
 
             modelBuilder.Entity("BeitPatissierServer.Models.Recipe", b =>
@@ -464,28 +377,6 @@ namespace BeitPatissierServer.Migrations
                     b.HasIndex("AllergenId");
 
                     b.ToTable("Recipes");
-
-                    b.HasData(
-                        new
-                        {
-                            RecipeId = 1,
-                            CookingTime = 15,
-                            Description = "מקרון חלבי עשיר בטעם פיסטוק",
-                            Name = "מקרון",
-                            PreparationTime = 30,
-                            Servings = 12,
-                            Steps = "[\"\\u05DC\\u05D4\\u05E7\\u05E6\\u05D9\\u05E3 \\u05D7\\u05DC\\u05D1\\u05D5\\u05E0\\u05D9\\u05DD\",\"\\u05DC\\u05E7\\u05E4\\u05DC \\u05D0\\u05D1\\u05E7\\u05EA \\u05E1\\u05D5\\u05DB\\u05E8 \\u05D5\\u05E9\\u05E7\\u05D3\\u05D9\\u05DD\",\"\\u05DC\\u05D6\\u05DC\\u05E3 \\u05E2\\u05D9\\u05D2\\u05D5\\u05DC\\u05D9\\u05DD\",\"\\u05DC\\u05D0\\u05E4\\u05D5\\u05EA \\u05D1\\u05D7\\u05D5\\u05DD \\u05E0\\u05DE\\u05D5\\u05DA\",\"\\u05DC\\u05DE\\u05DC\\u05D0 \\u05D1\\u05E7\\u05E8\\u05DD \\u05E4\\u05D9\\u05E1\\u05D8\\u05D5\\u05E7\"]"
-                        },
-                        new
-                        {
-                            RecipeId = 2,
-                            CookingTime = 25,
-                            Description = "קראוסון ממולא גבינות",
-                            Name = "קראוסון",
-                            PreparationTime = 120,
-                            Servings = 8,
-                            Steps = "[\"\\u05DC\\u05DC\\u05D5\\u05E9 \\u05D1\\u05E6\\u05E7 \\u05E9\\u05DE\\u05E8\\u05D9\\u05DD\",\"\\u05DC\\u05E7\\u05E4\\u05DC \\u05E9\\u05DB\\u05D1\\u05D5\\u05EA \\u05D7\\u05DE\\u05D0\\u05D4\",\"\\u05DC\\u05D2\\u05DC\\u05D2\\u05DC \\u05D5\\u05DC\\u05E4\\u05E8\\u05D5\\u05E1\",\"\\u05DC\\u05D4\\u05EA\\u05E4\\u05D9\\u05D7\",\"\\u05DC\\u05D0\\u05E4\\u05D5\\u05EA \\u05E2\\u05D3 \\u05D4\\u05D6\\u05D4\\u05D1\\u05D4\"]"
-                        });
                 });
 
             modelBuilder.Entity("BeitPatissierServer.Models.RecipeAllergen", b =>
@@ -501,38 +392,6 @@ namespace BeitPatissierServer.Migrations
                     b.HasIndex("AllergenId");
 
                     b.ToTable("RecipeAllergen");
-
-                    b.HasData(
-                        new
-                        {
-                            RecipeId = 1,
-                            AllergenId = 2
-                        },
-                        new
-                        {
-                            RecipeId = 1,
-                            AllergenId = 3
-                        },
-                        new
-                        {
-                            RecipeId = 1,
-                            AllergenId = 4
-                        },
-                        new
-                        {
-                            RecipeId = 2,
-                            AllergenId = 1
-                        },
-                        new
-                        {
-                            RecipeId = 2,
-                            AllergenId = 3
-                        },
-                        new
-                        {
-                            RecipeId = 2,
-                            AllergenId = 4
-                        });
                 });
 
             modelBuilder.Entity("BeitPatissierServer.Models.RecipeLine", b =>
@@ -563,72 +422,6 @@ namespace BeitPatissierServer.Migrations
                     b.HasIndex("RecipeId");
 
                     b.ToTable("RecipeLines");
-
-                    b.HasData(
-                        new
-                        {
-                            RecipeLineId = 1,
-                            IngredientId = 1,
-                            Quantity = 120m,
-                            RecipeId = 1,
-                            Unit = 0
-                        },
-                        new
-                        {
-                            RecipeLineId = 2,
-                            IngredientId = 2,
-                            Quantity = 150m,
-                            RecipeId = 1,
-                            Unit = 0
-                        },
-                        new
-                        {
-                            RecipeLineId = 3,
-                            IngredientId = 3,
-                            Quantity = 3m,
-                            RecipeId = 1,
-                            Unit = 0
-                        },
-                        new
-                        {
-                            RecipeLineId = 4,
-                            IngredientId = 4,
-                            Quantity = 50m,
-                            RecipeId = 1,
-                            Unit = 0
-                        },
-                        new
-                        {
-                            RecipeLineId = 5,
-                            IngredientId = 5,
-                            Quantity = 250m,
-                            RecipeId = 2,
-                            Unit = 0
-                        },
-                        new
-                        {
-                            RecipeLineId = 6,
-                            IngredientId = 2,
-                            Quantity = 50m,
-                            RecipeId = 2,
-                            Unit = 0
-                        },
-                        new
-                        {
-                            RecipeLineId = 7,
-                            IngredientId = 4,
-                            Quantity = 150m,
-                            RecipeId = 2,
-                            Unit = 0
-                        },
-                        new
-                        {
-                            RecipeLineId = 8,
-                            IngredientId = 6,
-                            Quantity = 10m,
-                            RecipeId = 2,
-                            Unit = 0
-                        });
                 });
 
             modelBuilder.Entity("BeitPatissierServer.Models.Tag", b =>
@@ -652,22 +445,6 @@ namespace BeitPatissierServer.Migrations
                     b.HasKey("TagId");
 
                     b.ToTable("Tags");
-
-                    b.HasData(
-                        new
-                        {
-                            TagId = 1,
-                            CategoryId = 0,
-                            Name = "פטיפורים",
-                            TagType = 0
-                        },
-                        new
-                        {
-                            TagId = 2,
-                            CategoryId = 0,
-                            Name = "מאפים",
-                            TagType = 0
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

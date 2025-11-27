@@ -8,6 +8,7 @@ namespace BeitPatissierServer.Models
         public int CategoryId { get; set; }
         public string Name { get; set; } // "חורף", "קיץ", "בוקר עובדים", "בר שיקים", "חלבי", "מתוק" וכו'
         public TagTypeEnum TagType { get; set; } // סוג הקטגוריה
+        public ICollection<ProductTag> ProductTags { get; set; } //רשימת ארועים מתאימים
     }
 
     public enum TagTypeEnum

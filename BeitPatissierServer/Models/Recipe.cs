@@ -10,5 +10,6 @@
         public int PreparationTime { get; set; } // זמן הכנה בדקות
         public int CookingTime { get; set; } // זמן בישול/אפייה בדקות
         public int Servings { get; set; } // מספר מנות
+        public ICollection<RecipeAllergen> Allergens { get; set; }
     }
 }
