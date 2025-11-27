@@ -25,7 +25,7 @@ namespace BeitPatissierServer.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequestDto model)
+        public async Task<IActionResult> Login([FromBody] LoginRequestDTO model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
