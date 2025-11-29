@@ -1,8 +1,8 @@
-import './App.css'
-import Sidebar from './components/Sidebar'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import ProductsPage from './pages/Products'
-import Login from './pages/login'
+import "./App.css";
+import Sidebar from "./components/Sidebar";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ProductsPage from "./pages/Products";
+import Login from "./pages/login";
 
 function App() {
   return (
@@ -16,20 +16,18 @@ function App() {
                   
                   */}
               {/* דף לוגין – לבד, בלי Sidebar */}
-              <Route path="/login" element={<Login />} />
-
+              <Route path="/" element={<Login />} />
               {/* <Route element={<ProtectedRoute />}> */}
               {/* אבטחת ניתוב למנהל בלבד */}
               <Route path="/מוצרים" element={<ProductsPage />} />
               {/* </Route> */}
             </Routes>
             {/* <Login /> */}
-
           </main>
         </div>
       </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
