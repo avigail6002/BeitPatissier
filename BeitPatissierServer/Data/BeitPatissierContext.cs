@@ -1,11 +1,12 @@
 ﻿using BeitPatissierServer.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
 
 namespace BeitPatissierServer.Data
 {
-    public class BeitPatissierContext : IdentityDbContext<BPUser, BPRole, int>
+    public class BeitPatissierContext : IdentityDbContext<BPUser, IdentityRole<int>, int>
     {
         public BeitPatissierContext(DbContextOptions<BeitPatissierContext> options) : base(options) { }
         public DbSet<Product> Products { get; set; }
@@ -19,6 +20,7 @@ namespace BeitPatissierServer.Data
         public DbSet<OrderLine> OrderLines { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
