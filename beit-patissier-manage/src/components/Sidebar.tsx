@@ -13,6 +13,7 @@ const Sidebar: React.FC = () => {
     const menuItems: MenuItem[] = [
         { path: '/מוצרים', label: 'מוצרים' },
         { path: '/הזמנות', label: 'הזמנות' }
+        
     ];
 
     return (
