@@ -12,6 +12,7 @@ export function Sidebar() {
     const menuItems: MenuItem[] = [
         { path: '/מוצרים', label: 'מוצרים' },
         { path: '/הזמנות', label: 'הזמנות' }
+        
     ];
 
     return (

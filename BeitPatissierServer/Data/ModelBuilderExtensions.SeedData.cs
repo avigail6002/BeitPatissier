@@ -161,10 +161,17 @@ namespace BeitPatissierServer.Data
                 new RecipeLine { RecipeLineId = 8, RecipeId = 2, IngredientId = 6, Quantity = 10m }   // שמרים
             );
 
+            // Cayegories
+            builder.Entity<Category>().HasData(
+                new Category { CategoryId = 1, Name = "מנות ראשונות" },
+                new Category { CategoryId = 2, Name = "מנות אחרונות" },
+                new Category { CategoryId = 3, Name = "מגשי ארוח" }
+            );
+
             // Products
             builder.Entity<Product>().HasData(
-                new Product { ProductId = 1, Name = "מקרון", Description = "מקרון עדין משקדים במגוון טעמים.", Price = 120m, RecipeId = 1 },
-                new Product { ProductId = 2, Name = "קראוסון", Description = "קראוסון חמאה קלאסי וטרי.", Price = 40m, RecipeId = 2 }
+                new Product { ProductId = 1, Name = "מקרון", CategoryId = 3, Description = "מקרון עדין משקדים במגוון טעמים.", Price = 120m, RecipeId = 1 },
+                new Product { ProductId = 2, Name = "קראוסון", CategoryId = 1, Description = "קראוסון חמאה קלאסי וטרי.", Price = 40m, RecipeId = 2 }
             );
 
             // ProductTags
