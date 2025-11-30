@@ -1,11 +1,9 @@
 // src/components/Navbar.tsx
 
 import React from 'react';
-import { NavLink } from 'react-router-dom'; // *** שינוי: NavLink במקום Link לאינדיקציה פעילה ***
+import { NavLink } from 'react-router-dom'; 
 import './Navbar.css';
 
-// רשימת הקישורים: 
-// הסדר הוא מימין לשמאל: ראשי (מימין) > אירועים > ... > שייקים אישי (משמאל)
 const navLinks = [
   { path: '/', label: 'ראשי' }, 
   { path: '/events', label: 'אירועים' },
@@ -24,9 +22,6 @@ export const Navbar = () => {
                     key={link.path} 
                     to={link.path} 
                     className="navbar-link"
-                    // *** התיקון הקריטי לקישור הראשי (Home): ***
-                    // הוספת end: true רק לנתיב הבסיס ('/'). זה מבטיח ש'ראשי' יסומן כפעיל
-                    // רק בנתיב המדויק '/' ולא בכל נתיב אחר (כמו /events).
                     {...(link.path === '/' && { end: true })} 
                 > 
                     {link.label}

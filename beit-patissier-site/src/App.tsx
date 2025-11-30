@@ -1,9 +1,8 @@
-// src/App.tsx - קוד מושלם
+// src/App.tsx
 
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// ייבוא רכיבי ה-Navbar והדפים
 import { Navbar } from './components/Navbar'; 
 import { Home } from './pages/Home';
 import { Events } from './pages/Events';
@@ -13,15 +12,13 @@ import { Blog } from './pages/Blog';
 import { Kashrut } from './pages/Kashrut';
 import { Profile } from './pages/Profile';
 
-// ייבוא קובץ העיצוב (אם קיים)
 import './App.css'; 
 
 export const App = () => {
   return (
     <Router>
       <Navbar /> 
-      {/* *** התיקון: הוספת Padding-Top *** */}
-      <main style={{ paddingTop: '65px' }}> 
+      <main className="main-content-wrapper"> 
         <Routes>
           <Route path="/" element={<Home />} /> 
           <Route path="/events" element={<Events />} />

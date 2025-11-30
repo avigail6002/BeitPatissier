@@ -1,34 +1,18 @@
-/* src/components/Navbar.css - קוד מושלם */
+/* src/App.css*/
 
-.navbar-container {
-    /* מיקום וגודל */
-    display: flex;
-    direction: rtl; /* כיוון מימין לשמאל */
-    position: fixed; /* מקבע את הסרגל למעלה */
-    top: 0;
-    width: 100%;
-    z-index: 1000; /* ודא שהוא מעל כל התוכן */
-
-    /* יישור ורווחים */
-    justify-content: center; /* *** תיקון: ממקם את הקישורים במרכז *** */
-    align-items: center; 
-    padding: 20px 0; /* פדינג קטן יותר לגובה */
-    
-    /* עיצוב */
-    background-color: white; 
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05); /* צל עדין */
+* {
+  box-sizing: border-box;
 }
 
-.navbar-link {
-    /* עיצוב קישור */
-    margin: 0 15px;
-    text-decoration: none;
-    color: #333;
-    font-size: 16px;
-    font-weight: normal; 
-    padding: 5px 0; 
+#root {
+  margin: 0;
+  padding: 0; 
 }
 
-.navbar-link:hover {
-    color: #007bff;
+.main-content-wrapper {
+    padding-top: 65px; 
+    max-width: 1280px; 
+    margin: 0 auto;
+    text-align: center;
+    padding: 2rem; 
 }
