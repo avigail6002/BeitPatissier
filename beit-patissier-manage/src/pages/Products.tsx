@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { GetAllProducts } from '../services/ProductService';
-import type { Product } from '../models/Product';
-import TableProduct from '../components/GenericTable';
+import { Product } from '../models/Product';
+import TableGeneric from '../components/GenericTable';
+
 
 type ViewMode = 'cards' | 'table';
+
 
 const ProductsPage: React.FC = () => {
     const [viewMode, setViewMode] = useState<ViewMode>('cards');
@@ -122,8 +124,8 @@ const ProductsPage: React.FC = () => {
                     ))}
                 </div>
             ) : (
-                <div className="bg-white rounded-lg shadow overflow-hidden">
-                    <TableProduct data={productsList} />
+                <div className="">
+                    <TableGeneric data={productsList} translations={Product.ColumnMapping} />
                 </div>
             )}
         </div>
