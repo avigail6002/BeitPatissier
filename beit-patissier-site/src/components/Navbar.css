@@ -1,0 +1,40 @@
+/* src/components/Navbar.css */
+
+.navbar-container {
+    /* ... סגנונות שנשארו ללא שינוי (כגון position: fixed, direction: rtl, וכו') ... */
+    display: flex;
+    direction: rtl; 
+    position: fixed; 
+    top: 0;
+    width: 100%;
+    z-index: 1000; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 20px 0; 
+    background-color: white; 
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05); 
+}
+
+.navbar-link {
+    /* ... סגנונות הקישור הרגיל ... */
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333; /* נשאר הצבע המקורי */
+    font-size: 16px;
+    font-weight: normal; 
+    padding: 5px 0; 
+}
+
+/* דוגמה ל-hover (נשארת ללא שינוי) */
+.navbar-link:hover {
+    color: #007bff;
+}
+
+/* *** התיקון הקריטי: מצב פעיל (Active State) - רק BOLD *** */
+.navbar-link.active {
+    font-weight: bold; /* הדרישה: רק הדגשה */
+    color: #333; /* *** ודא שמשתמשים בצבע הטקסט הרגיל (כדי שלא יהיה כחול) *** */
+    text-decoration: none; /* ודא שאין קו תחתון */
+    border-bottom: none; /* ודא שאין גבול תחתון */
+    padding-bottom: 5px; /* השאר את הפדינג כדי למנוע קפיצות גובה אם קיים */
+}
