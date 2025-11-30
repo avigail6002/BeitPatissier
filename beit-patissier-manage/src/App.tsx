@@ -1,10 +1,10 @@
-import "./App.css";
-import Sidebar from "./components/Sidebar";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ProductsPage from "./pages/Products";
-import Login from "./pages/login";
+import './App.css'
+import { Sidebar } from './components/Sidebar'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { ProductsPage } from './pages/Products'
+import DialogTest from "./pages/DialogTest"
 
-function App() {
+export function App() {
   return (
     <>
       <BrowserRouter>
@@ -15,19 +15,18 @@ function App() {
               {/* <Route path="/" element={<h1 className="text-2xl font-bold">ברוכים הבאים למערכת TechUp</h1>} />
                   
                   */}
-              {/* דף לוגין – לבד, בלי Sidebar */}
-              <Route path="/" element={<Login />} />
-              {/* <Route element={<ProtectedRoute />}> */}
+
               {/* אבטחת ניתוב למנהל בלבד */}
-              <Route path="/מוצרים" element={<ProductsPage />} />
+              {/* <Route element={<ProtectedRoute />}> */}
+              
+                <Route path="/" element={<Login />} />
+                <Route path="/מוצרים" element={<ProductsPage />} />              
               {/* </Route> */}
+              <Route path="/dialog-test" element={<DialogTest />} />
             </Routes>
-            {/* <Login /> */}
           </main>
         </div>
       </BrowserRouter>
     </>
   );
 }
-
-export default App;
