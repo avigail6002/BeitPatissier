@@ -1,10 +1,10 @@
-﻿using BeitPatissierServer.Data;
+using BeitPatissierServer.Data;
 using BeitPatissierServer.Mappers;
 using BeitPatissierServer.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -32,7 +32,7 @@ builder.Services.AddIdentity<BPUser, IdentityRole<int>>(options =>
 .AddEntityFrameworkStores<BeitPatissierContext>()
 .AddDefaultTokenProviders();
 
-// Password policy (אפשר לשנות לפי הצורך)
+// Password policy
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = true;
@@ -56,13 +56,13 @@ builder.Services.AddAuthentication(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        #if DEBUG
+#if DEBUG
         ValidateIssuer = false,
         ValidateAudience = false,
-        #else
+#else
         ValidateIssuer = true,
         ValidateAudience = true,
-        #endif
+#endif
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         ValidIssuer = jwtIssuer,
@@ -71,16 +71,16 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// CORS דינמי לכל המקורות כולל credentials
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("GlobalCors", policy =>
     {
         policy
-            .SetIsOriginAllowed(origin => true) // מאפשר כל מקור
+            .SetIsOriginAllowed(origin => true)
             .AllowAnyHeader()
             .AllowAnyMethod()
-            .AllowCredentials(); // מאפשר credentials כמו קוקיז/Authorization headers
+            .AllowCredentials();
     });
 });
 
@@ -95,31 +95,30 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
 var app = builder.Build();
 
-// להריץ את הפונקציה לאחר בניית האפליקציה
-using var scope = app.Services.CreateScope();
-var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
-
-string[] roles = { "Admin", "Employee", "Customer" };
-
-foreach (var roleName in roles)
+// יצירת רולים ומנהל
+using (var scope = app.Services.CreateScope())
 {
-    if (!await roleManager.RoleExistsAsync(roleName))
-    {
-        await roleManager.CreateAsync(new IdentityRole<int> { Name = roleName, NormalizedName = roleName.ToUpper() });
-    }
-}
-await CreateAdminUserAsync(app);
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
+    string[] roles = { "Admin", "Employee", "Customer" };
 
+    foreach (var roleName in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(roleName))
+        {
+            await roleManager.CreateAsync(new IdentityRole<int> { Name = roleName, NormalizedName = roleName.ToUpper() });
+        }
+    }
+
+    await CreateAdminUserAsync(app);
+}
 
 // Middleware
 app.UseRouting();
-
-// AutoMapper
-
 app.UseCors("GlobalCors");
 
 if (app.Environment.IsDevelopment())
@@ -143,13 +142,11 @@ async Task CreateAdminUserAsync(WebApplication app)
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<BPUser>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
 
-    // ודא שהרול קיים
     if (!await roleManager.RoleExistsAsync("Admin"))
     {
         await roleManager.CreateAsync(new IdentityRole<int>("Admin"));
     }
 
-    // יצירת משתמש מנהל
     var adminEmail = "admin@gmail.com";
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
     if (adminUser == null)

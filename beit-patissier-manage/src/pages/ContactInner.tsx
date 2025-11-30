@@ -98,7 +98,7 @@ const ContactInnerPage = () => {
           </div>
 
           <div className="flex justify-between items-start mt-3 shrink-0">
-            <button className="mt-4 !bg-transparent !border-none text-black hover:text-red-600 hover:underline transition text-sm">
+            <button className="mt-4 !bg-transparent font-medium !border-none text-black hover:text-red-600 hover:underline transition text-lg">
               הנפקת זיכוי
             </button>
             

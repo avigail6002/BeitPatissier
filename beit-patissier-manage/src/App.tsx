@@ -1,12 +1,11 @@
 import './App.css'
-import Sidebar from './components/Sidebar'
+import { Sidebar } from './components/Sidebar'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import ProductsPage from './pages/Products'
+import { ProductsPage } from './pages/Products'
 import DialogTest from "./pages/DialogTest"
 import ContactInner from './pages/ContactInner'
-
-
-function App() {
+import Login from './pages/login'
+export function App() {
   return (
     <>
       <BrowserRouter>
@@ -18,10 +17,11 @@ function App() {
                   
                   */}
 
-
-              {/* <Route element={<ProtectedRoute />}> */}
               {/* אבטחת ניתוב למנהל בלבד */}
-              <Route path="/מוצרים" element={<ProductsPage />} />
+              {/* <Route element={<ProtectedRoute />}> */}
+              
+                <Route path="/" element={<Login />} />
+                <Route path="/מוצרים" element={<ProductsPage />} />              
               {/* </Route> */}
               <Route path="/צור-קשר/" element={<ContactInner />} />
               <Route path="/dialog-test" element={<DialogTest />} />
@@ -30,7 +30,5 @@ function App() {
         </div>
       </BrowserRouter>
     </>
-  )
+  );
 }
-
-export default App
