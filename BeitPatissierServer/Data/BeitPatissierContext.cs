@@ -21,6 +21,7 @@ namespace BeitPatissierServer.Data
         public DbSet<Event> Events { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
