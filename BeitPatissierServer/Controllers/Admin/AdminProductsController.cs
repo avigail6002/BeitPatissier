@@ -9,14 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace BeitPatissierServer.Controllers.Admin
 {
     [ApiController]
-    [Route("api/[controller]/[action]")]
-    public class ProductsController : Controller
+    [Route("admin_api/[controller]/[action]")]
+    public class AdminProductsController : Controller
     {
         private readonly BeitPatissierContext _context;
         private readonly IMapper _mapper;
         private readonly UserManager<BPUser> _userManager;
 
-        public ProductsController(BeitPatissierContext context, IMapper mapper, UserManager<BPUser> userManager)
+        public AdminProductsController(BeitPatissierContext context, IMapper mapper, UserManager<BPUser> userManager)
         {
             _context = context;
             _mapper = mapper;
