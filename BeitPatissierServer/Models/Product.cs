@@ -11,7 +11,12 @@ namespace BeitPatissierServer.Models
         [ForeignKey(nameof(RecipeId))]
         public Recipe Recipe { get; set; }
         public decimal Price { get; set; } // מחיר המוצר
+        public int CategoryId { get; set; }
+
+        [ForeignKey(nameof(CategoryId))]
+        public Category Category { get; set; }
         public ICollection<Image> Images { get; set; } // כתובת התמונה של המוצר
         public ICollection<ProductTag> ProductTags { get; set; } //רשימת ארועים מתאימים
+  
     }
 }
