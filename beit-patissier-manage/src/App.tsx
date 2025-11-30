@@ -1,7 +1,7 @@
 import './App.css'
-import Sidebar from './components/Sidebar'
+import { Sidebar } from './components/Sidebar'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import ProductsPage from './pages/Products'
+import { ProductsPage } from './pages/Products'
 import DialogTest from "./pages/DialogTest"
 
 
