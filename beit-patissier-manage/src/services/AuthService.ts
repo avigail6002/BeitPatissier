@@ -1,7 +1,7 @@
 // services/authService.ts
 
 import axios from 'axios';
-import apiClient from './ApiClientService';
+import {ApiClient} from './ApiClientService';
 
 interface GoogleLoginResponse {
     token: string;
@@ -10,7 +10,7 @@ interface GoogleLoginResponse {
 const API_BASE_ROUTE = '/Login'; 
 export const googleLogin = async (idToken: string): Promise<string> => {
     try {
-        const response = await apiClient.post<GoogleLoginResponse>(`${API_BASE_ROUTE}/GoogleLogin`, {
+        const response = await ApiClient.post<GoogleLoginResponse>(`${API_BASE_ROUTE}/GoogleLogin`, {
             idToken: idToken 
         });
         const token = response.data.token;

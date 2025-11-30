@@ -116,7 +116,6 @@ namespace BeitPatissierServer.Controllers
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(jwtKey);
 
-            // 🛑 תיקון 2b: שימוש ב-await במקום .Result
             var userRoles = await _userManager.GetRolesAsync(user);
 
             var claims = new List<System.Security.Claims.Claim>

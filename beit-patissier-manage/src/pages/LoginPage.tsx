@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import {GoogleAuthButton} from '../components/GoogleAuthButton';
 import { useNavigate } from 'react-router-dom';
 
-const LoginPage: React.FC = () => {
+export const LoginPage = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [statusMessage, setStatusMessage] = useState(''); 
@@ -55,4 +55,3 @@ const LoginPage: React.FC = () => {
     );
 };
 
-export default LoginPage;

@@ -2,13 +2,12 @@
 import axios from 'axios';
 import { isAuthenticated } from './AuthService';
 
-const ApiClient = axios.create({
+export const ApiClient = axios.create({ 
     baseURL: 'https://localhost:7212/api', 
     headers: {
         'Content-Type': 'application/json',
     }
 });
-
 /**
  * Interceptor לבקשות: מוסיף את ה-JWT לכותרת Authorization לפני שליחת הבקשה.
  * זה מבטיח שכל קריאה מאובטחת לשרת תכלול את הטוקן.
@@ -41,4 +40,3 @@ ApiClient.interceptors.response.use(
     }
 );
 
-export default ApiClient;

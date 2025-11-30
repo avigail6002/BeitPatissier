@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import ProductsPage from './pages/Products'
 import DialogTest from "./pages/DialogTest"
 import { GoogleOAuthProvider } from '@react-oauth/google'
-import LoginPage from './pages/LoginPage'
+import {LoginPage} from './pages/LoginPage'
 
 const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
