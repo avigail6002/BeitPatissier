@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 interface MenuItem {
@@ -7,7 +6,7 @@ interface MenuItem {
 }
 
 
-const Sidebar: React.FC = () => {
+export function Sidebar() {
     const location = useLocation();
     
     const menuItems: MenuItem[] = [
@@ -27,14 +26,17 @@ const Sidebar: React.FC = () => {
           const isActive = decodeURI(location.pathname) === item.path;
 
           return (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`text-black text-right w-full text-xs transition focus-visible:outline-none ${isActive
-                  ? "underline underline-offset-8 decoration-1 decoration-[#454545] font-bold"
-                  : ""
-                }`}
-            >
+       <Link
+  key={item.path}
+  to={item.path}
+  className={`
+    text-right w-full text-xs px-2 py-2 rounded transition 
+    ${isActive
+      ? "bg-[#e6e6e6] font-bold border-r-4 border-[#454545]"
+      : "hover:bg-[#d4d4d4]"
+    }
+  `}
+>
               {item.label}
             </Link>
           );
@@ -43,5 +45,3 @@ const Sidebar: React.FC = () => {
     </aside>
   );
 };
-
-export default Sidebar;
