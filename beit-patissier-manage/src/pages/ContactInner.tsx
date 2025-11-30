@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const ContactInnerPage = () => {
+export function ContactInnerPage() {
   const [status, setStatus] = useState('waiting');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -112,5 +112,3 @@ const ContactInnerPage = () => {
     </div>
   );
 };
-
-export default ContactInnerPage;
