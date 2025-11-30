@@ -1,11 +1,10 @@
 using BeitPatissierServer.Data;
 using BeitPatissierServer.Mappers;
 using BeitPatissierServer.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-
-//using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -26,7 +25,7 @@ builder.Services.AddIdentity<BPUser, BPRole>()
     .AddEntityFrameworkStores<BeitPatissierContext>()
     .AddDefaultTokenProviders();
 
-// Password policy (אפשר לשנות לפי הצורך)
+// Password policy
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = true;
@@ -36,40 +35,45 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireNonAlphanumeric = false;
 });
 
-//// JWT (אם תרצי להשתמש)
-//var jwtKey = builder.Configuration["Jwt:Key"];
-//var jwtIssuer = builder.Configuration["Jwt:Issuer"];
-//var jwtAudience = builder.Configuration["Jwt:Audience"];
+// JWT
+var jwtKey = builder.Configuration["Jwt:Key"];
+var jwtIssuer = builder.Configuration["Jwt:Issuer"];
+var jwtAudience = builder.Configuration["Jwt:Audience"];
 
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//})
-//.AddJwtBearer(options =>
-//{
-//    options.TokenValidationParameters = new TokenValidationParameters
-//    {
-//        ValidateIssuer = true,
-//        ValidateAudience = true,
-//        ValidateLifetime = true,
-//        ValidateIssuerSigningKey = true,
-//        ValidIssuer = jwtIssuer,
-//        ValidAudience = jwtAudience,
-//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
-//    };
-//});
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+#if DEBUG
+        ValidateIssuer = false,
+        ValidateAudience = false,
+#else
+        ValidateIssuer = true,
+        ValidateAudience = true,
+#endif
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtIssuer,
+        ValidAudience = jwtAudience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+    };
+});
 
-// CORS דינמי לכל המקורות כולל credentials
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("GlobalCors", policy =>
     {
         policy
-            .SetIsOriginAllowed(origin => true) // מאפשר כל מקור
+            .SetIsOriginAllowed(origin => true)
             .AllowAnyHeader()
             .AllowAnyMethod()
-            .AllowCredentials(); // מאפשר credentials כמו קוקיז/Authorization headers
+            .AllowCredentials();
     });
 });
 
@@ -88,11 +92,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
 var app = builder.Build();
 
-// Middleware
 app.UseRouting();
-
-// AutoMapper
-
 app.UseCors("GlobalCors");
 
 if (app.Environment.IsDevelopment())
