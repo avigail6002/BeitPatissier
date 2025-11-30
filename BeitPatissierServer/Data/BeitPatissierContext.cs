@@ -12,6 +12,7 @@ namespace BeitPatissierServer.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductTag> ProductTags { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<RecipeLine> RecipeLines { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
@@ -21,7 +22,6 @@ namespace BeitPatissierServer.Data
         public DbSet<Event> Events { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Contact> Contacts { get; set; }
-        public DbSet<Category> Categories { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

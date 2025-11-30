@@ -10,6 +10,8 @@ namespace BeitPatissierServer.Mappers
         public MappingProfile()
         {
             CreateMap<Product, ProductDTO>().ReverseMap();
+            CreateMap<Category, CategoryDTO>().ReverseMap();
+
         }
     }
 }
