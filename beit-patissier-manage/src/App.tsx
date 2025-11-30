@@ -3,6 +3,7 @@ import { Sidebar } from './components/Sidebar'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ProductsPage } from './pages/Products'
 import DialogTest from "./pages/DialogTest"
+import Login from './pages/login'
 
 export function App() {
   return (
