@@ -4,8 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ProductsPage } from './pages/Products'
 import DialogTest from "./pages/DialogTest"
 
-
-function App() {
+export function App() {
   return (
     <>
       <BrowserRouter>
@@ -17,10 +16,11 @@ function App() {
                   
                   */}
 
-
-              {/* <Route element={<ProtectedRoute />}> */}
               {/* אבטחת ניתוב למנהל בלבד */}
-              <Route path="/מוצרים" element={<ProductsPage />} />
+              {/* <Route element={<ProtectedRoute />}> */}
+              
+                <Route path="/" element={<Login />} />
+                <Route path="/מוצרים" element={<ProductsPage />} />              
               {/* </Route> */}
               <Route path="/dialog-test" element={<DialogTest />} />
             </Routes>
@@ -28,7 +28,5 @@ function App() {
         </div>
       </BrowserRouter>
     </>
-  )
+  );
 }
-
-export default App
