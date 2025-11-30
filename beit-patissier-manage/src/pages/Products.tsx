@@ -5,7 +5,7 @@ import TableProduct from '../components/GenericTable';
 
 type ViewMode = 'cards' | 'table';
 
-const ProductsPage: React.FC = () => {
+export function ProductsPage() {
     const [viewMode, setViewMode] = useState<ViewMode>('cards');
     const [searchTerm, setSearchTerm] = useState('');
     // const [categoryFilter, setCategoryFilter] = useState('');
@@ -129,5 +129,3 @@ const ProductsPage: React.FC = () => {
         </div>
     );
 };
-
-export default ProductsPage;

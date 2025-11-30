@@ -6,7 +6,7 @@ using BeitPatissierServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BeitPatissierServer.Controllers.Admin
+namespace BeitPatissierServer.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
@@ -30,18 +30,5 @@ namespace BeitPatissierServer.Controllers.Admin
             var allProductsDTO = _mapper.Map<List<ProductDTO>>(allProducts);
             return Ok(allProductsDTO);
         }
-
-        [HttpPost]
-        public ActionResult<ProductDTO> AddProduct([FromBody] ProductDTO productDTO)
-        {
-            var product = _mapper.Map<Product>(productDTO);
-            _context.Products.Add(product);
-            _context.SaveChanges();
-
-            return Ok(_mapper.Map<ProductDTO>(product));
-        }
-
-
-
     }
 }

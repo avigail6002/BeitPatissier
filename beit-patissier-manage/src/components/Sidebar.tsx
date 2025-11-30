@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 interface MenuItem {
@@ -7,7 +6,7 @@ interface MenuItem {
 }
 
 
-const Sidebar: React.FC = () => {
+export function Sidebar() {
     const location = useLocation();
     
     const menuItems: MenuItem[] = [
@@ -46,5 +45,3 @@ const Sidebar: React.FC = () => {
     </aside>
   );
 };
-
-export default Sidebar;
