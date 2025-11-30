@@ -3,8 +3,8 @@ import { Sidebar } from './components/Sidebar'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ProductsPage } from './pages/Products'
 import DialogTest from "./pages/DialogTest"
+import ContactInner from './pages/ContactInner'
 import Login from './pages/login'
-
 export function App() {
   return (
     <>
@@ -23,6 +23,7 @@ export function App() {
                 <Route path="/" element={<Login />} />
                 <Route path="/מוצרים" element={<ProductsPage />} />              
               {/* </Route> */}
+              <Route path="/צור-קשר/" element={<ContactInner />} />
               <Route path="/dialog-test" element={<DialogTest />} />
             </Routes>
           </main>
