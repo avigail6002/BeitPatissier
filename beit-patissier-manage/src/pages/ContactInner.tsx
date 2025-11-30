@@ -14,7 +14,7 @@ export function ContactInnerPage() {
   const selectedOption = statusOptions.find((opt) => opt.value === status);
 
   return (
-    <div className="flex h-screen bg-white font-sans text-right overflow-hidden px-[70px] py-[20px]" dir="rtl">
+    <div className="flex bg-white font-sans text-right overflow-hidden p-10" dir="rtl">
       
       <main className="flex-1 flex flex-col p-2 overflow-hidden gap-5">
 
